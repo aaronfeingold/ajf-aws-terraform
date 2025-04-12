@@ -1,0 +1,41 @@
+aws_account_id = "000000000000"  # Replace with your AWS account ID
+terraform_state_bucket = "your-terraform-state-bucket"
+project_name = "your-project-name"
+organization_name = "your-organization-name"
+
+applications = {
+  "app-name-1" = {
+    description = "Description of first application"
+    environment = "prod"
+
+    buckets = {
+      "example-bucket-1" = {
+        versioning_enabled = true
+        region             = "us-east-1"
+      }
+    },
+
+    lambda_functions = {
+      "example-lambda" = {
+        maximum_event_age_in_seconds = 60
+        maximum_retry_attempts       = 2
+        log_retention_days           = 30
+        allow_api_gateway            = true
+      }
+    },
+
+    ecr_repositories = {
+      "example-repo" = {
+        keep_last_images = 30
+      }
+    },
+
+    step_functions = {
+      "example-step-function" = {
+        enabled = true
+        schedule = "cron(0 0 * * ? *)"
+        lambda_function_name = "example-lambda"
+      }
+    }
+  }
+}
